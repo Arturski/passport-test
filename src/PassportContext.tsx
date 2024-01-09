@@ -18,8 +18,8 @@ export const PassportProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Passport configuration options
     const passportConfig = {
       clientId: "GAvERIbbGXUYVWqlZLZ9KZ2p1LvRaHNv",
-      redirectUri: "https://main--bespoke-gumption-6c6cf6.netlify.app/login",
-      logoutRedirectUri: "https://main--bespoke-gumption-6c6cf6.netlify.app",
+      redirectUri: "https://passport-test-mocha.vercel.app/login",
+      logoutRedirectUri: "https://passport-test-mocha.vercel.app/",
       scope: "transact openid offline_access email",
       audience: "platform_api",
       baseConfig: new config.ImmutableConfiguration({
