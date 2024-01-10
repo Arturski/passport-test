@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Heading, Text, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Image, Spinner, Badge } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Image, Badge } from '@chakra-ui/react';
 import { OrderV3 } from '@imtbl/core-sdk';
 import { bigNumberToDecimal } from '../helpers/CurrencyData';
 // import ViewOrderAsset from '../pages/ViewOrderAsset';
@@ -24,6 +24,7 @@ const Card: React.FC<{
 
   useEffect(() => {
     setLoadingTokenDetail(true);
+    console.log(loadingTokenDetail);
     if (order.buy.data.token_address && fxRate) {
       let icon = fxRate[order.buy.data.token_address]?.image_url;
       setSymbol(icon);
