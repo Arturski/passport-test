@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Box, Button } from '@chakra-ui/react';
-import { PassportContext } from '../PassportContext';
+import { PassportContext } from '../context/PassportContext';
 
 
 const WalletStatus = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PassportContext } from '../PassportContext';
+import { PassportContext } from '../context/PassportContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
