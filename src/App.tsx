@@ -6,6 +6,8 @@ import Page from "./page/Page";
 import { DrawerContextProvider } from "./context/DrawerContext"; // Import the provider
 import { MarketProvider } from "./context/MarketContext";
 import theme from "./theme";
+import Navbar from './components/Navbar';
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
             <DrawerContextProvider> {/* Use DrawerContextProvider here */}
               <Box w={'100vw'} minH="100vh">
                 <Container p={0} maxW="container.2xl">
+                  <Navbar />
                   <Routes>
                     <Route path="/" element={<Page />} />
                     <Route path="/login" element={<Login />} />
