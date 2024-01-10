@@ -8,9 +8,9 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      // process: "process/browser",
-      // stream: "stream-browserify",
-      "safer-buffer": "buffer",
+      process: "process/browser",
+      stream: "stream-browserify",
+      "safe-buffer": "buffer",
       // util: "util",
       jsbi: path.resolve(__dirname, "node_modules/jsbi"),
     },
