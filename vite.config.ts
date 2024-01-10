@@ -10,7 +10,7 @@ export default defineConfig({
     alias: {
       // process: "process/browser",
       // stream: "stream-browserify",
-      "safe-buffer": "buffer",
+      "safer-buffer": "buffer",
       // util: "util",
       jsbi: path.resolve(__dirname, "node_modules/jsbi"),
     },
