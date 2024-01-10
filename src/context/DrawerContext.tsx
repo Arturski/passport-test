@@ -34,7 +34,7 @@ export const DrawerContextProvider: React.FC<DrawerContextProviderProps> = ({ ch
   const [wallet, setWallet] = useState<WalletType>({ name: null, address: null });
 
   const onWalletOpen = (name: string, address: string) => {
-    setWallet({ name, address }); // Update the wallet state with the received data
+    setWallet({ name, address });
     setIsWalletOpen(true);
   };
 
@@ -43,15 +43,13 @@ export const DrawerContextProvider: React.FC<DrawerContextProviderProps> = ({ ch
   };
 
   return (
-    <DrawerContext.Provider
-      value={{
-        wallet,
-        setWallet, // Provide the function to set the wallet
-        isWalletOpen,
-        onWalletOpen,
-        onWalletClose,
-      }}
-    >
+    <DrawerContext.Provider value={{
+      wallet,
+      setWallet,
+      isWalletOpen,
+      onWalletOpen,
+      onWalletClose,
+    }}>
       {children}
     </DrawerContext.Provider>
   );
