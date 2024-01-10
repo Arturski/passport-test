@@ -8,11 +8,19 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      process: "process/browser",
-      stream: "stream-browserify",
       "safe-buffer": "buffer",
       // util: "util",
       jsbi: path.resolve(__dirname, "node_modules/jsbi"),
+      'events': path.resolve(__dirname, 'node_modules/events'),
+      'stream': path.resolve(__dirname, 'node_modules/stream-browserify'),
+      'process': path.resolve(__dirname, 'node_modules/process'),
+      'crypto': path.resolve(__dirname, 'node_modules/crypto-browserify'),
+      'crypto-browserify': path.resolve(__dirname, 'node_modules/crypto-browserify'),
+      'https-browserify': path.resolve(__dirname, 'node_modules/https-browserify'),
+      'os-browserify': path.resolve(__dirname, 'node_modules/os-browserify'),
+      'stream-http': path.resolve(__dirname, 'node_modules/stream-http'),
+      https: 'agent-base',
+      './runtimeConfig': './runtimeConfig.browser',
     },
   },
   plugins: [
