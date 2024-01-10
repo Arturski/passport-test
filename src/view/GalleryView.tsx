@@ -5,13 +5,13 @@ import { useMarketContext, MarketContextType } from '../context/MarketContext';
 import { DrawerContext } from '../context/DrawerContext';
 import { fetchOrders } from '../helpers/ImmutableFunctions';
 import { OrdersApiListOrdersV3Request, OrderV3 } from '@imtbl/core-sdk';
-// import ViewInventory from './view/ViewInventory';
+import ViewInventory from './ViewInventory';
 import { getCryptoExchangeRates } from '../helpers/CurrencyData';
 import { FaCopy } from 'react-icons/fa'; // Make sure to install this icon library
 import { CheckIcon } from '@chakra-ui/icons';
 // import { imxlink } from '../helpers/ImmutableFunctions';
 
-const GalleryView: React.FC = () => {
+const ViewGallery: React.FC = () => {
   const [orders, setOrders] = React.useState<OrderV3[]>();
   const { isWalletOpen, onWalletClose, wallet } = React.useContext(DrawerContext);
   const {
@@ -165,7 +165,7 @@ const GalleryView: React.FC = () => {
             )}
           </DrawerHeader>
           <DrawerBody bg={'gray.600'}>
-            {/* <ViewInventory connectedAddress={walletState.link || walletState.passport || ''} /> */}
+            <ViewInventory connectedAddress={walletState.link || walletState.passport || ''} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
@@ -173,4 +173,4 @@ const GalleryView: React.FC = () => {
   );
 };
 
-export default GalleryView;
+export default ViewGallery;

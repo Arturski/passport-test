@@ -41,7 +41,7 @@ interface Balance {
   withdrawable: string;
 }
 
-export default function ViewInventory({ connectedAddress }: ViewInventoryProps) {
+function ViewInventory({ connectedAddress }: ViewInventoryProps) {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<AssetWithOrders[] | null>(null);
   const [selectedCollection, setSelectedCollection] = useState('');
@@ -325,3 +325,5 @@ export default function ViewInventory({ connectedAddress }: ViewInventoryProps) 
     </Box>
   );
 }
+
+export default ViewInventory;
