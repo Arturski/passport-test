@@ -4,7 +4,7 @@ import { Heading, Flex, Button } from '@chakra-ui/react';
 import { OrderV3 } from '@imtbl/core-sdk';
 import { FaHandHoldingUsd } from "react-icons/fa";
 import { GiPriceTag } from "react-icons/gi";
-import { useMarketContext, MarketContextType } from '../helpers/MarketContext';
+import { useMarketContext, MarketContextType } from '../context/MarketContext';
 
 const BuyWidget2: React.FC<{ order: OrderV3 }> = ({ order }) => {
   const marketContext = useMarketContext();
