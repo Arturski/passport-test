@@ -5,10 +5,11 @@ import Login from './page/Login';
 import Page from "./page/Page";
 import { DrawerContextProvider } from "./context/DrawerContext"; // Import the provider
 import { MarketProvider } from "./context/MarketContext";
+import theme from "./theme";
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Router>
         <PassportProvider>
           <MarketProvider>
