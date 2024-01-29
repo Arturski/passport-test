@@ -1,5 +1,17 @@
 import React, { createContext, useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { config, passport,  } from '@imtbl/sdk';
+import { config, passport } from '@imtbl/sdk';
+
+// passport.PassportModuleConfiguration
+interface PassportModuleConfiguration {
+  baseConfig: config.ImmutableConfiguration;
+  clientId: string;
+  logoutRedirectUri?: string; // defaults to first logout redirect URI specified in the Immutable Developer Hub
+  logoutMode?: 'redirect' | 'silent'; // defaults to 'redirect'
+  redirectUri: string;
+  scope?: string;
+  audience?: string;
+}
+
 
 interface PassportContextType {
   passportClient?: passport.Passport;
@@ -16,7 +28,7 @@ export const PassportProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     // Passport configuration options
-    const passportConfig = {
+    const passportConfig: PassportModuleConfiguration = {
       clientId: "GAvERIbbGXUYVWqlZLZ9KZ2p1LvRaHNv",
       redirectUri: "https://passport-test-mocha.vercel.app/login",
       logoutRedirectUri: "https://passport-test-mocha.vercel.app/",

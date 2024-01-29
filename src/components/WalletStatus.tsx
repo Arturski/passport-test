@@ -6,6 +6,7 @@ import { imxlink } from '../helpers/ImmutableFunctions';
 import { DrawerContext, DrawerContextType } from '../context/DrawerContext';
 import { getEthereumAccount } from '../helpers/CurrencyData';
 import { PassportContext } from '../context/PassportContext';
+import { passport } from '@imtbl/sdk';
 interface WalletAvatar {
   src: string;
   walletKey: string;
@@ -23,14 +24,16 @@ const walletAvatars: Record<string, WalletAvatar> = {
 };
 
 export const WalletStatus = () => {
-  const { passportClient, setProvider } = useContext(PassportContext)!;
+  const { passportClient, setProvider, provider } = useContext(PassportContext)!;
   const { walletState, setWalletState } = useMarketContext() as MarketContextType;
 
   const { onWalletOpen } = useContext(DrawerContext) as DrawerContextType;
   const [connecting, setConnecting] = useState(false);
 
+
   useEffect(() => {
     const checkEthereumAccount = async () => {
+      setConnecting(true);
       const ethereumAccount = await getEthereumAccount();
       if (ethereumAccount) {
         console.log('Ethereum account found:', ethereumAccount);
@@ -38,25 +41,49 @@ export const WalletStatus = () => {
           ...prevWalletState,
           link: ethereumAccount,
         }));
+        setConnecting(false); 
       } else {
         console.log('No Ethereum account found in the browser.');
-        setConnecting(true); // remove not needed
+        setConnecting(false); 
+      }
+    };
+
+    const checkPassport = async () => {
+      setConnecting(true); 
+      if (provider) {
+        const response = await passportClient.getUserInfo();
+        console.log('userinfo',response);
+        setConnecting(false); 
+      } else {
+        console.log('Trying ');
+        const userProfile: passport.UserProfile = await passportClient.login({ useCachedSession: true });
+        if (userProfile) {
+          const newProvider = await passportClient.connectImx(); 
+          setProvider(newProvider);
+        } else {
+          console.log('np cached logins');
+        }
+        setConnecting(false); 
+        // setWalletState((prevWalletState) => ({
+        //   ...prevWalletState,
+        //   link: ethereumAccount,
+        // }));
       }
     };
 
     checkEthereumAccount();
-  }, [setWalletState]);
+    checkPassport();
+  }, [ provider]);
 
   const handleConnect = async (walletType: 'passport' | 'link') => {
     if (passportClient && setProvider && setWalletState && walletState) {
       if (walletType === 'passport') {
         try {
           const provider = await passportClient.connectImx();
-          console.log('provider created');
-          setProvider(provider);
-          console.log('provider set in context');
+          console.log('provider', provider);
           setWalletState({ ...walletState, passport: await provider.getAddress() });
           console.log('wallet state updated');
+          console.log(walletState);
         } catch (error) {
           console.error('Error connecting Passport to IMX:', error);
         }
