@@ -8,7 +8,7 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      "safe-buffer": "buffer",
+      "buffer": "buffer",
       // util: "util",
       jsbi: path.resolve(__dirname, "node_modules/jsbi"),
       'events': path.resolve(__dirname, 'node_modules/events'),
