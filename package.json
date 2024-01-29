@@ -12,7 +12,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
-    "@imtbl/sdk": "^0.27.8",
+    "@imtbl/imx-sdk": "^3.3.0",
+    "@imtbl/sdk": "^1.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "buffer": "^6.0.3",
     "jsbi": "3.2.1",

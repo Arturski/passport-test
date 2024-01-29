@@ -1,4 +1,4 @@
-// import { Link} from '@imtbl/imx-sdk';
+import { Link} from '@imtbl/imx-sdk';
 import {  ImmutableX, Config , BalancesApiListBalancesRequest, ListBalancesResponse, AssetsApiListAssetsRequest, AssetsApiGetAssetRequest, ListOrdersResponseV3, OrdersApiListOrdersV3Request, OrderV3, TokenDetails, Asset, TokensApiGetTokenRequest, TransfersApiListTransfersRequest, ListTransfersResponse, WithdrawalsApiListWithdrawalsRequest, ListWithdrawalsResponse, DepositsApiListDepositsRequest, ListDepositsResponse, MintsApiListMintsRequest, ListMintsResponse, Mint, Transfer, Withdrawal, Deposit} from '@imtbl/core-sdk';
 
 
@@ -8,7 +8,7 @@ export async function getTokenIdAndAddress(order: OrderV3): Promise<any> {
   return { tokenId, contractAddress };
 };
 
-// export const imxlink = new Link('https://link.sandbox.x.immutable.com');
+export const imxlink = new Link('https://link.sandbox.x.immutable.com');
 const imxClient = new ImmutableX(Config.SANDBOX);
 
 // export const imxlink = new Link('https://link.x.immutable.com');
@@ -90,10 +90,14 @@ export const fetchUserAssets = async (address: string) => {
       const assetResponse = await imxClient.listAssets(assetParams);
       const { result, remaining } = assetResponse;
 
+      console.log('batch below');
+      console.log(result);
+
       allAssets.push(...result); // Accumulate assets
 
       if (remaining > 0) {
         cursor = assetResponse.cursor; // Update cursor for the next request
+        console.log('cursor: ' + cursor);
       } else {
         hasMore = false; // No more pages
       }
@@ -102,6 +106,8 @@ export const fetchUserAssets = async (address: string) => {
       return [];
     }
   }
+  console.log('all assets below');
+  console.log(allAssets);
 
   return allAssets;
 };
@@ -308,6 +314,35 @@ export const fetchDepositsAll = async (params: DepositsApiListDepositsRequest): 
     }
 
     return allDeposits;
+  } catch (error) {
+    console.error(error);
+    return []; // Return an empty array in case of an error
+  }
+};
+
+
+export const fetchUserNFTAll = async (params: AssetsApiListAssetsRequest): Promise<Asset[]> => {
+  try {
+    let hasMore = true;
+    let cursor = ''; // Initialize cursor
+    const allAssets = [];
+
+    while (hasMore) {
+      const assetParams = { ...params, cursor };
+
+      const assetResponse = await imxClient.listAssets(assetParams);
+      const { result, remaining, cursor: newCursor } = assetResponse;
+
+      allAssets.push(...result); // Accumulate withdrawals
+
+      if (remaining > 0) {
+        cursor = newCursor; // Update cursor for the next request
+      } else {
+        hasMore = false; // No more pages
+      }
+    }
+
+    return allAssets;
   } catch (error) {
     console.error(error);
     return []; // Return an empty array in case of an error

@@ -1,13 +1,13 @@
 import React, { useState, 
-    // useEffect
+    useEffect
  } from 'react';
 import {
-    // Input,
+    Input,
     Button,
-    // Flex,
+    Flex,
     Box,
     Text,
-    // Select,
+    Select,
     Popover,
     PopoverBody,
     PopoverHeader,
@@ -18,9 +18,9 @@ import {
     Icon,
 } from '@chakra-ui/react';
 import { FaSackDollar } from 'react-icons/fa6';
-// import { EthAddress, PositiveNumberString } from '@imtbl/imx-sdk';
-// import { imxlink } from '../helpers/ImmutableFunctions';
-// import { CurrencyData } from '../helpers/CurrencyData';
+import { EthAddress, PositiveNumberString } from '@imtbl/imx-sdk';
+import { imxlink } from '../helpers/ImmutableFunctions';
+import { CurrencyData } from '../helpers/CurrencyData';
 
 interface Asset {
     token_id: string;
@@ -31,55 +31,54 @@ interface ActionSellProps {
     assets: Asset[] | null;
 }
 
-// interface LinkOrder {
-//     tokenId: string;
-//     tokenAddress: EthAddress;
-//     amount: PositiveNumberString;  // Ensure this is correct as per your type definitions
-//     currencyAddress?: string;  // Change to string if it can be a regular string
-// }
+interface LinkOrder {
+    tokenId: string;
+    tokenAddress: EthAddress;
+    amount: PositiveNumberString;  // Ensure this is correct as per your type definitions
+    currencyAddress?: string;  // Change to string if it can be a regular string
+}
 
 const ActionSell: React.FC<ActionSellProps> = ({ assets }) => {
-    // const [assetData, setAssetData] = useState<(LinkOrder | null)[]>([]);
+    const [assetData, setAssetData] = useState<(LinkOrder | null)[]>([]);
     const [isSellPopoverOpen, setIsSellPopoverOpen] = useState(false);
 
-    // useEffect(() => {
-    //     setAssetData(assets ? assets.map(() => null) : []);
-    // }, [assets]);
+    useEffect(() => {
+        setAssetData(assets ? assets.map(() => null) : []);
+    }, [assets]);
 
-    // const updateAssetData = (index: number, updatedData: Partial<LinkOrder>) => {
-    //     const currentData = assetData[index] || { tokenId: assets![index].token_id, tokenAddress: assets![index].token_address as EthAddress };
-    //     const newData = { ...currentData, ...updatedData };
-    //     setAssetData(prev => prev.map((item, idx) => idx === index ? newData as LinkOrder : item));  // Cast newData as LinkOrder
-    // };
+    const updateAssetData = (index: number, updatedData: Partial<LinkOrder>) => {
+        const currentData = assetData[index] || { tokenId: assets![index].token_id, tokenAddress: assets![index].token_address as EthAddress };
+        const newData = { ...currentData, ...updatedData };
+        setAssetData(prev => prev.map((item, idx) => idx === index ? newData as LinkOrder : item));  // Cast newData as LinkOrder
+    };
 
-    // const handleAmountChange = (index: number, amount: string) => {
-    //     updateAssetData(index, { amount: amount as PositiveNumberString });
-    // };
+    const handleAmountChange = (index: number, amount: string) => {
+        updateAssetData(index, { amount: amount as PositiveNumberString });
+    };
 
-    // const handleCurrencyChange = (index: number, selectedCurrencySymbol: string) => {
-    //     let currencyAddress: string | undefined = '';  // Declare as string or undefined
-    //     if (selectedCurrencySymbol !== 'ETH') {
-    //         const selectedCurrencyData = CurrencyData.find(currency => currency.symbol === selectedCurrencySymbol);
-    //         currencyAddress = selectedCurrencyData ? selectedCurrencyData.token_address : undefined;
-    //     }
-    //     updateAssetData(index, { currencyAddress });
-    // };
+    const handleCurrencyChange = (index: number, selectedCurrencySymbol: string) => {
+        let currencyAddress: string | undefined = '';  // Declare as string or undefined
+        if (selectedCurrencySymbol !== 'ETH') {
+            const selectedCurrencyData = CurrencyData.find(currency => currency.symbol === selectedCurrencySymbol);
+            currencyAddress = selectedCurrencyData ? selectedCurrencyData.token_address : undefined;
+        }
+        updateAssetData(index, { currencyAddress });
+    };
 
     const handleSellConfirm = async () => {
-        // if (assetData.some(item => item === null || item.amount === '0')) {
-        //     console.error('Please complete all selections before selling.');
-        //     return;
-        // }
+        if (assetData.some(item => item === null || item.amount === '0')) {
+            console.error('Please complete all selections before selling.');
+            return;
+        }
 
-        // console.log('Sell assets:', assetData);
-        // // Uncomment the below code to enable the actual sell process
-        // for (const order of assetData) {
-        //     if (order) {
-        //         const response = await imxlink.sell(order);
-        //         console.log(response);
-        //     }
-        // }
-        console.log('link sell');
+        console.log('Sell assets:', assetData);
+        // Uncomment the below code to enable the actual sell process
+        for (const order of assetData) {
+            if (order) {
+                const response = await imxlink.sell(order);
+                console.log(response);
+            }
+        }
     };
 
     const handleSellPopoverOpen = () => setIsSellPopoverOpen(true);
@@ -102,7 +101,7 @@ const ActionSell: React.FC<ActionSellProps> = ({ assets }) => {
                         <Text fontSize={'2xs'}>Note: you will need to approve each asset separately</Text>
                     </PopoverHeader>
                     <PopoverBody>
-                        {/* {assets?.map((asset, index) => {
+                        {assets?.map((asset, index) => {
                             const assetDataEntry = assetData[index];
                             return (
                                 <Flex alignItems="center" ml={2} key={index}>
@@ -132,7 +131,7 @@ const ActionSell: React.FC<ActionSellProps> = ({ assets }) => {
                                     <Text fontSize="2xs" mr={2}>{asset.token_id}</Text>
                                 </Flex>
                             );
-                        })} */}
+                        })}
                         <Button size="xs" width="100%" mt={2} onClick={handleSellConfirm}>
                             Sell
                         </Button>

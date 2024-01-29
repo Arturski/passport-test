@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Input,
     Button,
@@ -22,9 +22,9 @@ import {
 import { BiTransfer } from 'react-icons/bi';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 
-// import { ERC20TokenType, ETHTokenType, ERC721TokenType } from '@imtbl/imx-sdk';
+import { ERC20TokenType, ETHTokenType, ERC721TokenType } from '@imtbl/imx-sdk';
 import { validateAddress } from '../helpers/ImmutableFunctions';
-
+import { imxlink } from '../helpers/ImmutableFunctions';
 import {
     getDecimalsFromSymbol,
     bigNumberToDecimal,
@@ -70,11 +70,11 @@ const ActionTransfers: React.FC<ActionTransfersProps> = ({
     };
 
     const handleTransferConfirm = async () => {
-        // if (transferType === 'nft') {
-        //     linkNFTTransfer(assets);
-        // } else if (transferType === 'currency') {
-        //     linkCoinTransfer(amountDec, symbol, receiverAddress);
-        // }
+        if (transferType === 'nft') {
+            linkNFTTransfer(assets);
+        } else if (transferType === 'currency') {
+            linkCoinTransfer(amountDec, symbol, receiverAddress);
+        }
         console.log('transfer coin');
     };
 
@@ -103,61 +103,61 @@ const ActionTransfers: React.FC<ActionTransfersProps> = ({
         setSymbol(value);
     };
 
-    // const linkCoinTransfer = async (amount: string, symbol: string, token_address: string | null) => {
-    //     try {
-    //         let transferRequests = [];
+    const linkCoinTransfer = async (amount: string, symbol: string, token_address: string | null) => {
+        try {
+            let transferRequests = [];
 
-    //         if (token_address) {
-    //             // Use ERC20TokenType when token_address is provided
-    //             transferRequests.push({
-    //                 amount: amount,
-    //                 symbol: symbol,
-    //                 type: ERC20TokenType.ERC20,
-    //                 tokenAddress: token_address,
-    //                 toAddress: receiverAddress,
-    //             });
-    //         } else {
-    //             // Use ETHTokenType when token_address is not provided
-    //             transferRequests.push({
-    //                 amount: amount,
-    //                 type: ETHTokenType.ETH,
-    //                 toAddress: receiverAddress,
-    //             });
-    //         }
+            if (token_address) {
+                // Use ERC20TokenType when token_address is provided
+                transferRequests.push({
+                    amount: amount,
+                    symbol: symbol,
+                    type: ERC20TokenType.ERC20,
+                    tokenAddress: token_address,
+                    toAddress: receiverAddress,
+                });
+            } else {
+                // Use ETHTokenType when token_address is not provided
+                transferRequests.push({
+                    amount: amount,
+                    type: ETHTokenType.ETH,
+                    toAddress: receiverAddress,
+                });
+            }
 
-    //         const transferResponsePayload = await imxlink.transfer(transferRequests);
+            const transferResponsePayload = await imxlink.transfer(transferRequests);
 
-    //         console.log(transferResponsePayload);
-    //         // Handle the response as needed
-    //     } catch (error) {
-    //         console.error('Address validation error:', error);
-    //         return false;
-    //     }
-    // };
+            console.log(transferResponsePayload);
+            // Handle the response as needed
+        } catch (error) {
+            console.error('Address validation error:', error);
+            return false;
+        }
+    };
 
-    // const linkNFTTransfer = async (assets: any) => {
-    //     try {
-    //         const transferRequests = assets.map((asset: any) => ({
-    //             tokenId: asset.token_id,
-    //             type: ERC721TokenType.ERC721,
-    //             tokenAddress: asset.token_address,
-    //             toAddress: receiverAddress,
-    //         }));
+    const linkNFTTransfer = async (assets: any) => {
+        try {
+            const transferRequests = assets.map((asset: any) => ({
+                tokenId: asset.token_id,
+                type: ERC721TokenType.ERC721,
+                tokenAddress: asset.token_address,
+                toAddress: receiverAddress,
+            }));
 
-    //         const transferResponsePayload = await imxlink.batchNftTransfer(transferRequests);
-    //         console.log(transferResponsePayload);
-    //         // Handle the response as needed
-    //     } catch (error) {
-    //         console.error('Address validation error:', error);
-    //         return false;
-    //     }
-    // };
+            const transferResponsePayload = await imxlink.batchNftTransfer(transferRequests);
+            console.log(transferResponsePayload);
+            // Handle the response as needed
+        } catch (error) {
+            console.error('Address validation error:', error);
+            return false;
+        }
+    };
 
 
-    //   useEffect(() => {
-    //     console.log('balances: ' + JSON.stringify(walletBalances));
-    //     console.log('assets: ' + JSON.stringify(assets));
-    //   }, [assets, walletBalances]);
+      useEffect(() => {
+        console.log('balances: ' + JSON.stringify(walletBalances));
+        console.log('assets: ' + JSON.stringify(assets));
+      }, [assets, walletBalances]);
 
     return (
         <Box width={'20%'}>

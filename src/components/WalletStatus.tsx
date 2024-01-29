@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Box, Avatar, Flex, Icon, Spinner } from '@chakra-ui/react';
 import { FaCircle } from 'react-icons/fa';
 import { useMarketContext, MarketContextType } from '../context/MarketContext';
-// import { imxlink } from '../helpers/ImmutableFunctions';
+import { imxlink } from '../helpers/ImmutableFunctions';
 import { DrawerContext, DrawerContextType } from '../context/DrawerContext';
 import { getEthereumAccount } from '../helpers/CurrencyData';
 import { PassportContext } from '../context/PassportContext';
@@ -61,12 +61,12 @@ export const WalletStatus = () => {
           console.error('Error connecting Passport to IMX:', error);
         }
       } else if (walletType === 'link') {
-        // try {
-        //   const response = await imxlink.setup({});
-        //   setWalletState({ ...walletState, link: response.address });
-        // } catch (error) {
-        //   console.error('Error connecting Link to IMX:', error);
-        // }
+        try {
+          const response = await imxlink.setup({});
+          setWalletState({ ...walletState, link: response.address });
+        } catch (error) {
+          console.error('Error connecting Link to IMX:', error);
+        }
         console.log('link setup');
       }
     }

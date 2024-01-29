@@ -35,7 +35,6 @@ const CardMicro: React.FC<CardMicroProps> = ({ asset, selected, onSelect }) => {
 
   const handleButtonHover = (isHovering: boolean) => {
     setIsButtonVisible(isHovering);
-    console.log(asset);
   };
 
   const handleInfoModalOpen = () => {

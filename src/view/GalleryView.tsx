@@ -9,7 +9,7 @@ import ViewInventory from './ViewInventory';
 import { getCryptoExchangeRates } from '../helpers/CurrencyData';
 import { FaCopy } from 'react-icons/fa'; // Make sure to install this icon library
 import { CheckIcon } from '@chakra-ui/icons';
-// import { imxlink } from '../helpers/ImmutableFunctions';
+import { imxlink } from '../helpers/ImmutableFunctions';
 
 const ViewGallery: React.FC = () => {
   const [orders, setOrders] = React.useState<OrderV3[]>();
@@ -25,7 +25,7 @@ const ViewGallery: React.FC = () => {
     fxRate,
     metadata,
     walletState,
-    // setWalletState
+    setWalletState
   } = useMarketContext() as MarketContextType;
 
 
@@ -47,16 +47,16 @@ const ViewGallery: React.FC = () => {
     if (walletType === 'link') {
       // Clear the current state first
       console.log('handle change password');
-      // setWalletState(prevState => ({ ...prevState, link: null }));
+      setWalletState(prevState => ({ ...prevState, link: null }));
   
-      // try {
-      //   // Wait for the setup to complete and then update the state
-      //   const response = await imxlink.setup({});
-      //   setWalletState(prevState => ({ ...prevState, link: response.address }));
-      // } catch (error) {
-      //   console.error("Error setting up link wallet:", error);
-      //   // Handle the error appropriately
-      // }
+      try {
+        // Wait for the setup to complete and then update the state
+        const response = await imxlink.setup({});
+        setWalletState(prevState => ({ ...prevState, link: response.address }));
+      } catch (error) {
+        console.error("Error setting up link wallet:", error);
+        // Handle the error appropriately
+      }
   
       onWalletClose();
     } else if (walletType === 'passport') {

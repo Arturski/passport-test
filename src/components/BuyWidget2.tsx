@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading, Flex, Button } from '@chakra-ui/react';
-// import { imxlink } from '../helpers/ImmutableFunctions';
+import { imxlink } from '../helpers/ImmutableFunctions';
 import { OrderV3 } from '@imtbl/core-sdk';
 import { FaHandHoldingUsd } from "react-icons/fa";
 import { GiPriceTag } from "react-icons/gi";
@@ -11,10 +11,9 @@ const BuyWidget2: React.FC<{ order: OrderV3 }> = ({ order }) => {
   const { walletState }: MarketContextType = marketContext!;
 
   const handleLinkBuy = async () => {
-    // const order_id: string = String(order.order_id);
-    // const response = await imxlink.buy({ orderIds: [order_id] });
-    // console.log(response);
-    console.log('link buy: ' + JSON.stringify(order));
+    const order_id: string = String(order.order_id);
+    const response = await imxlink.buy({ orderIds: [order_id] });
+    console.log(response);
   };
 
   const handlePassportBuy = async () => {

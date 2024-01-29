@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Heading, Text, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Image, Badge } from '@chakra-ui/react';
+import { Box, Spinner, Flex, Heading, Text, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, Image, Badge } from '@chakra-ui/react';
 import { OrderV3 } from '@imtbl/core-sdk';
 import { bigNumberToDecimal } from '../helpers/CurrencyData';
-// import ViewOrderAsset from '../pages/ViewOrderAsset';
+import ViewOrderAsset from '../view/ViewOrderAsset';
 import BuyWidget2 from './BuyWidget2';
 import { useMarketContext, MarketContextType } from '../context/MarketContext';
 
@@ -24,7 +24,6 @@ const Card: React.FC<{
 
   useEffect(() => {
     setLoadingTokenDetail(true);
-    console.log(loadingTokenDetail);
     if (order.buy.data.token_address && fxRate) {
       let icon = fxRate[order.buy.data.token_address]?.image_url;
       setSymbol(icon);
@@ -123,7 +122,7 @@ const Card: React.FC<{
           <DrawerCloseButton />
           <DrawerHeader p={4}>{order.sell.data.properties?.name} - {order.sell.data.properties?.collection?.name}<Badge marginLeft={'5px'} variant='subtle' colorScheme='gray'># {order.sell.data.token_id}</Badge></DrawerHeader>
           <DrawerBody p={0}>
-            {/* {loadingTokenDetail ? <Spinner /> : <ViewOrderAsset dollarValue={dollarValue?.toFixed(2) || '0'} order={order} token_address={order.sell.data.token_address || ''} token_id={order.sell.data.token_id || ''} />} */}
+            {loadingTokenDetail ? <Spinner /> : <ViewOrderAsset dollarValue={dollarValue?.toFixed(2) || '0'} order={order} token_address={order.sell.data.token_address || ''} token_id={order.sell.data.token_id || ''} />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

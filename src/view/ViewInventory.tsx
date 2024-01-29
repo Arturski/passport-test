@@ -26,8 +26,9 @@ import ActionTransfers from '../components/ActionTransfers';
 import ActionWithdrawals from '../components/ActionWithdrawals';
 import ActionDeposits from '../components/ActionDeposits';
 import ActionSell from '../components/ActionSell';
-import { AssetWithOrders } from '@imtbl/core-sdk';
-import { fetchUserAssets, fetchBalances } from '../helpers/ImmutableFunctions';
+import { AssetWithOrders, AssetsApiListAssetsRequest } from '@imtbl/core-sdk';
+import { fetchBalances, fetchUserNFTAll } from '../helpers/ImmutableFunctions';
+
 
 interface ViewInventoryProps {
   connectedAddress: string;
@@ -59,7 +60,14 @@ function ViewInventory({ connectedAddress }: ViewInventoryProps) {
       if (connectedAddress) {
         setLoading(true);
         try {
-          const userAssets = await fetchUserAssets(connectedAddress);
+          const assetParams: AssetsApiListAssetsRequest = {
+            pageSize: 200,
+            status: 'imx',
+            user: connectedAddress,
+          };
+          const userAssets = await fetchUserNFTAll(assetParams);
+          console.log('Inventory');
+          console.log(userAssets);
           setItems(userAssets as AssetWithOrders[]);
         } catch (error) {
           console.error('Error fetching user assets:', error);
