@@ -24,7 +24,6 @@ export const PassportProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       audience: "platform_api",
       baseConfig: new config.ImmutableConfiguration({
         environment: config.Environment.SANDBOX,
-        apiKey: "", // Provide the apiKey if required
       }),
     };
 
